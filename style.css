@@ -22,6 +22,7 @@
   --sp-300: 0.5rem;
   --sp-400: 1rem;
   --sp-450: 1.5rem;
+  --sp-475: 1.75rem;
   --sp-500: 2rem;
   --sp-550: 2.5rem;
   --sp-575: 3rem;
@@ -95,6 +96,7 @@
   body {
     display: grid;
     justify-content: center;
+    margin-inline: var(--sp-475);
     text-align: center;
     line-height: 1.5;
     letter-spacing: -0.01em;
@@ -107,18 +109,17 @@
   h1 {
     position: relative;
     margin-block-end: var(--sp-400);
-    font-size: var(--fs-800);
+    font-size: clamp(var(--fs-400), 11.2vw, var(--fs-800));
     filter: drop-shadow(2px 2px 0px #35383f);
     text-shadow: 2px 2px 0px #35383f;
     -webkit-text-stroke-width: 10px;
     -webkit-text-stroke-color: #35383f;
-    
+
     &::after {
       content: "Flip a Coin Game";
       position: absolute;
       inset: 0;
       -webkit-text-stroke-width: 0px;
-
     }
   }
 
@@ -131,19 +132,26 @@
     justify-content: center;
     grid-template-areas: "stack";
     margin-block-end: var(--sp-550);
-    transition: rotate .2s ease-out;
-    perspective: 1000;
-    
-    &:hover {
-      rotate: x 180deg;
-    }
-    
-    img:first-child {
+    perspective: 1000px;
+
+    img {
       grid-area: stack;
+      backface-visibility: hidden;
+      transition: transform 0.3s ease-out;
+      transform-style: preserve-3d;
     }
+
     img:last-child {
-      grid-area: stack;
+      transform: rotateX(180deg);
     }
+  }
+
+  /* class to rotate coin */
+  .rotate180deg {
+    transform: rotateX(180deg);
+  }
+  .rotate0deg {
+    transform: rotateX(0deg);
   }
 
   .shadow-img {
@@ -153,7 +161,7 @@
   p {
     margin-block: 0 var(--sp-600);
     font-size: var(--fs-500);
-  }  
+  }
 
   #random-btn {
     padding: var(--sp-300) var(--sp-550);
@@ -162,7 +170,7 @@
     border: none;
     border-radius: 8px;
     box-shadow: 0px 4px 0px 0px #23649b;
-    transition: all .1s ease-in-out;
+    transition: all 0.1s ease-in-out;
     cursor: pointer;
 
     &:hover {
@@ -171,7 +179,6 @@
     &:active {
       translate: 0 4px;
       box-shadow: 0px 0px 0px 0px #23649b;
-
     }
   }
 }

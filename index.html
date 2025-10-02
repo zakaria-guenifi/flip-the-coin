@@ -4,24 +4,28 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description"
+    content="Flip a virtual coin online with instant heads or tails results. Simple, fast, and fun digital coin toss.">
+
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@600&display=swap" rel="stylesheet">
+  <link rel="preload" href="https://fonts.googleapis.com/css2?family=Kanit:wght@600&display=swap" rel="stylesheet">
   <link rel="icon" href="resources/favicon.ico" type="image/x-icon" sizes="96x96" />
   <link rel="stylesheet" href="./style.css">
+
   <title>Flip the coin | Zakaria Guenifi</title>
 
 </head>
 
 <body>
   <main>
-    <h1>Flip a Coin Game</h1>
-    <h3>Press the coin or the button to flip the coin</h3>
+    <h1>Flip a Coin</h1>
+    <h2>Press the coin or the button to flip the coin</h2>
     <div class="coin">
-      <img src="./resources/heads.svg" alt="Heads face of the coin">
-      <img src="./resources/tails.svg" alt="Tails face of the coin">
+      <img src="./resources/heads.svg" width="160" height="160" alt="Heads face of the coin">
+      <img src="./resources/tails.svg" width="160" height="160" alt="Tails face of the coin">
     </div>
-    <img class="shadow-img" src="./resources/shadow.svg" alt="Coin shadow">
+    <img class="shadow-img" src="./resources/shadow.svg" width="100" height="8" alt="Coin shadow">
     <p class="result" aria-live="polite">Heads</p>
     <button type="button" id="random-btn">RANDOM</button>
   </main>

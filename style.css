@@ -109,7 +109,7 @@
   h1 {
     position: relative;
     margin-block-end: var(--sp-400);
-    font-size: clamp(var(--fs-400), 11.2vw, var(--fs-800));
+    font-size: clamp(var(--fs-400), 11.1vw, var(--fs-800));
     filter: drop-shadow(2px 2px 0px #35383f);
     text-shadow: 2px 2px 0px #35383f;
     -webkit-text-stroke-width: 10px;

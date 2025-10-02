@@ -85,6 +85,18 @@
     font-family: inherit;
     font-size: inherit;
   }
+  
+  /* remove animations for people who've turned them off */
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
 }
 
 @layer base {
@@ -105,80 +117,165 @@
   }
 }
 
-@layer components {
-  h1 {
-    position: relative;
-    margin-block-end: var(--sp-400);
-    font-size: clamp(var(--fs-400), 11.1vw, var(--fs-800));
-    filter: drop-shadow(2px 2px 0px #35383f);
-    text-shadow: 2px 2px 0px #35383f;
-    -webkit-text-stroke-width: 10px;
-    -webkit-text-stroke-color: #35383f;
+h1 {
+  position: relative;
+  margin-block-end: var(--sp-400);
+  font-size: clamp(var(--fs-400), 11.1vw, var(--fs-800));
+  filter: drop-shadow(2px 2px 0px #35383f);
+  text-shadow: 2px 2px 0px #35383f;
+  -webkit-text-stroke-width: 10px;
+  -webkit-text-stroke-color: #35383f;
 
-    &::after {
-      content: "Flip a Coin Game";
-      position: absolute;
-      inset: 0;
-      -webkit-text-stroke-width: 0px;
+  &::after {
+    content: "Flip a Coin Game";
+    position: absolute;
+    inset: 0;
+    -webkit-text-stroke-width: 0px;
+  }
+}
+
+h3 {
+  margin-block: 0 var(--sp-600);
+}
+
+.coin {
+  display: grid;
+  justify-content: center;
+  grid-template-areas: "stack";
+  margin-block-end: var(--sp-550);
+  perspective: 1000px;
+  z-index: 2;
+
+  img {
+    grid-area: stack;
+    backface-visibility: hidden;
+    transition: transform 0.3s ease-out;
+    transform-style: preserve-3d;
+
+    &::selection {
+      background-color: transparent;
     }
   }
 
-  h3 {
-    margin-block: 0 var(--sp-600);
-  }
-
-  .coin {
-    display: grid;
-    justify-content: center;
-    grid-template-areas: "stack";
-    margin-block-end: var(--sp-550);
-    perspective: 1000px;
-
-    img {
-      grid-area: stack;
-      backface-visibility: hidden;
-      transition: transform 0.3s ease-out;
-      transform-style: preserve-3d;
-    }
-
-    img:last-child {
-      transform: rotateX(180deg);
-    }
-  }
-
-  /* class to rotate coin */
-  .rotate180deg {
+  img:last-child {
     transform: rotateX(180deg);
   }
-  .rotate0deg {
-    transform: rotateX(0deg);
+}
+
+/* classes to rotate coin */
+.flip-heads {
+  animation: flipHeads 0.5s cubic-bezier(0.4, 1.4, 0.6, 1);
+}
+.flip-tails {
+  animation: flipTails 0.5s cubic-bezier(0.4, 1.4, 0.6, 1);
+}
+/* class shows tails img for the tails result */
+.shadow-effect {
+  animation: shadowEffect 0.5s ease-out;
+}
+.glow {
+  animation: glow 0.3s ease-in-out;
+}
+
+@keyframes flipHeads {
+  0% {
+    transform: translate(0, 0) rotateX(0deg);
+    filter: blur(0px);
   }
-
-  .shadow-img {
-    margin: var(--sp-575) auto;
+  25% {
+    transform: translate(0px, -64px) rotateX(180deg);
+    filter: blur(2px);
   }
-
-  p {
-    margin-block: 0 var(--sp-600);
-    font-size: var(--fs-500);
+  50% {
+    transform: translate(0px, -64px) rotateX(0deg);
   }
+  75% {
+    transform: translate(0px, -64px) rotateX(180deg);
+    filter: blur(2px);
+  }
+  100% {
+    transform: translate(0, 0) rotateX(360deg);
+    filter: blur(0px);
+  }
+}
+@keyframes flipTails {
+  0% {
+    transform: translate(0, 0) rotateX(180deg);
+    filter: blur(0px);
+  }
+  25% {
+    transform: translate(0px, -64px) rotateX(0deg);
+    filter: blur(2px);
+  }
+  50% {
+    transform: translate(0px, -64px) rotateX(180deg);
+    filter: blur(2px);
+  }
+  75% {
+    transform: translate(0px, -64px) rotateX(0deg);
+    filter: blur(2px);
+  }
+  100% {
+    transform: translate(0, 0) rotateX(180deg);
+    filter: blur(0px);
+  }
+}
+@keyframes shadowEffect {
+  0% {
+    transform: scale(1);
+    opacity: 1;
+    filter: blur(0px);
+  }
+  50% {
+    transform: scale(0.8);
+    opacity: 0.64;
+    filter: blur(1px);
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+    filter: blur(0px);
+  }
+}
 
-  #random-btn {
-    padding: var(--sp-300) var(--sp-550);
-    color: var(--clr-white);
-    background-color: var(--clr-accent);
-    border: none;
-    border-radius: 8px;
-    box-shadow: 0px 4px 0px 0px #23649b;
-    transition: all 0.1s ease-in-out;
-    cursor: pointer;
+@keyframes glow {
+  0% {
+    text-shadow: 0 0 0px #fcb003;
+  }
+  50% {
+    text-shadow: 0 0 12px #fcb003;
+  }
+  100% {
+    text-shadow: 0 0 0px #fcb003;
+  }
+}
+/* --------------------- */
 
-    &:hover {
-      color: var(--clr-dark);
-    }
-    &:active {
-      translate: 0 4px;
-      box-shadow: 0px 0px 0px 0px #23649b;
-    }
+.shadow-img {
+  margin: var(--sp-575) auto;
+}
+
+p {
+  margin-block: 0 var(--sp-600);
+  font-size: var(--fs-500);
+}
+
+#random-btn {
+  padding: var(--sp-300) var(--sp-550);
+  color: var(--clr-white);
+  background-color: var(--clr-accent);
+  border: none;
+  border-radius: 8px;
+  box-shadow: 0px 4px 0px 0px #23649b;
+  transition: all 0.1s ease-in-out;
+  cursor: pointer;
+
+  &:hover,
+  &:focus-visible {
+    color: var(--clr-dark);
+  }
+  &:active {
+    translate: 0 4px;
+    box-shadow: 0px 0px 0px 0px #23649b;
   }
 }
